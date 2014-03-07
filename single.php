@@ -2,64 +2,77 @@
 /**
  *
  * @package WordPress
- * @subpackage Base_Theme
+ * @subpackage HivistaSoft_Theme
  */
+get_header();
+$title_container = 'h2';
 ?>
-<?php get_header(); ?>
-<script>
-show_uncw = false;
-show_910 = false;
-</script>
-<div class="heading">
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li>Blog</li>
-	</ul>
-	<h1 class="text-blog">Blog</h1>
+<div id="main">	
+<?php if ( have_posts() ) : the_post(); ?>	
+<div class="single-bar">
+	<a href="<?php echo home_url('/'); ?>" class="left"><img src="<?php echo TDU; ?>/images/logo-im-s.png" alt=""></a>
+	<?php get_top_menu_child(); ?>
 </div>
-<div id="main">
-	<?php if ( have_posts() ) : the_post(); ?>
-	<article id="content" class="left single-content">
-		<div id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-			<header>
-				<?php the_post_thumbnail(); ?>
-				<div class="header">
-					<div class="date-cell cell">
-						<strong class="date"><?php the_time('d'); ?> <span class="month"><?php the_time('F'); ?></span></strong>
-					</div>
-					<div class="cell">
-						<h1><?php the_title(); ?></h1>
-							
-						<?php// theme_entry_meta(); ?>
-						<div class="entry-tags"><?php the_tags(false, false, false); ?></div>
-						
-						<?php if ( comments_open() ) : ?>
-							<div class="comments-info">
-								Comments: <?php comments_popup_link( '0', '1', '%' ); ?>
-							</div>
-						<?php endif; ?>
-					</div>
-				</div>
-			</header>	
-			<div class="entry-content">
-				<?php the_content(" "); ?>
-				<?php wp_link_pages( array( 'before' => '<div class="page-link"><span>' . __( 'Pages:', 'theme' ) . '</span>', 'after' => '</div>' ) ); ?>
+<script>
+	jQuery(function(){
+		var w = jQuery(window).width();
+		jQuery('.page-image img').width(w);
+		
+		jQuery(window).resize(function(){
+			var w = jQuery(window).width();
+			jQuery('.page-image img').width(w);
+		});
+	
+		$('.post-socials-row').sticky({ topSpacing: 0, className: 'sticky', wrapperClassName: 'p-soc-wrap' });
+	});
+</script>
+<div class="page-image">
+	<?php if(has_post_thumbnail()) echo get_the_post_thumbnail( get_the_ID(), 'full'); ?>
+</div>
+<div class="single-content">
+	<article class="article">
+		<?php $categories = get_the_category(); ?>
+		<?php $cat = getFirstCategory(get_the_ID()); ?>
+		<div class="post-socials-row">
+			<div class="center-wrap cf">
+				<h5 class="data-row"><a href="<?php echo home_url('/'); ?>">IMNOW</a> / <a href="<?php echo get_category_link($cat->cat_ID); ?>"><?php echo $cat->name; ?></a></h5>
+				<?php echo $GLOBALS['socialshare']->getButtons(get_permalink(), 1); ?>
 			</div>
 		</div>
-		<!--<div id="nav-below" class="navigation nav-single">
-			<span class="nav-previous"><?php previous_post_link( '%link', __( '<span class="meta-nav">&larr;</span> Previous Entry: %title', 'theme' ) ); ?></span>
-			<span class="nav-next"><?php next_post_link( '%link', __( 'Next Entry: %title <span class="meta-nav">&rarr;</span>', 'theme' ) ); ?></span>
-		</div>-->
-		
-		<?php echo add_socials_to_content(); ?>
-		
-		<?php comments_template( '', true ); ?>
-		<div class="map" style="display:block; width: 600px; height: 400px;">
-			<div id="map-canvas"></div>
+		<h1><?php the_title(); ?></h1>
+		<span class="meta"><?php the_time('j.m.y'); ?> By <a href="<?php the_author_url(); ?>" target="_blank" ><?php the_author(); ?></a> <a href="<? comments_link(); ?>"><? comments_number('No comments','1 Comment','% Comments'); ?></a></span>		
+		<div class="content">
+			<?php the_content(); ?>
+			<br>
+			<div class="btn-red">IM LIVE</div>
 		</div>
 	</article>
-
-	<?php endif; ?>
-	<?php get_sidebar(); ?>
+	<div class="promotions-section promotions-single">
+		<h3>PROMOTIONS</h3>
+		<div class="holder">
+			<div class="promo"><a href="#"><img src="<?php echo TDU; ?>/images/promo-1.jpg" alt=""></a></div>
+			<div class="promo"><a href="#"><img src="<?php echo TDU; ?>/images/promo-2.jpg" alt=""></a></div>
+			<div class="promo"><a href="#"><img src="<?php echo TDU; ?>/images/promo-3.jpg" alt=""></a></div>
+		</div>
+	</div>
+	<h3 class="more-title">MORE</h3>
+	<div class="posts-holder">
+		<?php 		
+		if($categories)
+		{
+			foreach ($categories as $key => $value) 
+			{
+				$all_cats[] = $value->slug;
+			}	
+			$all_cats_str = implode(",", $all_cats);
+		}
+		
+		query_posts(array('category_name' => $all_cats_str, 'post__not_in' => array(get_the_ID())));
+		include("loop.php"); 
+		?>	
+	</div>
 </div>
-<?php get_footer(); ?>
+<? endif; ?>
+</div>
+<a href="#footer-container" class="btn-gotofooter"><img src="<?php echo TDU; ?>/images/btn-footer.png" alt=""></a>
+<? get_footer(); ?>

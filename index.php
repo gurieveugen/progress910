@@ -1,22 +1,42 @@
 <?php
 /**
  * @package WordPress
- * @subpackage Base_Theme
+ * @subpackage HivistaSoft_Theme
  */
 ?>
-<?php get_header(); ?>
-<div class="heading">
-	<ul class="breadcrumbs">
-		<li><a href="#">Home</a></li>
-		<li>Blog</li>
-	</ul>
-	<h1 class="text-blog">Blog</h1>
-</div>
-<div id="main">
-	<div id="content" class="left">
-		<?php include("loop.php"); ?>
+<? get_header(); ?>
+
+<?php 
+GLOBAL $TO; 
+$socialshare = $GLOBALS['socialshare'];
+error_reporting(E_ALL);
+?>
+<!-- main -->
+<div id="main" class="main-blog">	
+	<div class="top-section">
+		<div class="logo-date">
+			<h1><a href="<?php bloginfo('url'); ?>">im now</a></h1>
+			<p>Real-time resources and inspiration from the imcreator team</p>
+			<div class="date"><?php echo date('j.n.Y'); ?></div>
+		</div>
+		<div class="top-post">
+			<a href="<?=$TO->get_option('rm_link','hpfeatured');?>"><img src="<?=$TO->get_option('image','hpfeatured');?>" alt=""></a>
+			<div class="holder">
+				<h3><a href="<?=$TO->get_option('rm_link','hpfeatured');?>"><?=str_ireplace("\n","</h2><h2>",$TO->get_option('title','hpfeatured'));?></a></h3>
+				<a href="<?=$TO->get_option('rm_link','hpfeatured');?>"><?=wpautop($TO->get_option('content','hpfeatured'));?></a>
+				<a href="<?=$TO->get_option('rm_link','hpfeatured');?>" class="link-more">more</a>
+			</div>
+		</div>
 	</div>
-	<?php get_sidebar(); ?>
-	<a href="#" id="to_top" class="btn-top">BACK TO TOP</a>
+	<div class="blog-bar">
+		<?php get_top_menu_child(); ?>		
+		<?php echo $socialshare->getButtons(); ?>
+	</div>
+	
+	<div class="posts-holder">		
+		<?php get_template_part('loop'); ?>
+	</div>
+	
 </div>
-<?php get_footer(); ?>
+<a href="#footer-container" class="btn-gotofooter"><img src="<?php echo TDU; ?>/images/btn-footer.png" alt=""></a>
+<? get_footer(); ?>
