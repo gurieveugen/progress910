@@ -20,7 +20,7 @@ get_header();
 	<div class="content-block left">
 		<h2>AMENITIES RIGHT OUTSIDE YOUR DOOR</h2>
 		<p><strong>With everything from state-of-the-art 24-hour fitness centers to study lounges to hammock gardens, we have your needs and wants are covered!</strong></p>
-		<p>Progress910 residents want privacy, security, amenities, and comfort to create the ideal space for their UNCW student lifestyle.</p>
+		<p>Progress910 residents want privacy, security, amenities, and comfort to create the ideal space for their student lifestyle.</p>
 		<br>
 		<h2>unit features</h2>
 		<ul class="list">
