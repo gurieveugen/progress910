@@ -175,6 +175,8 @@ require(TEMPLATEPATH . '/functions/meta_box_is_floor_page.php');
 require(TEMPLATEPATH . '/functions/page_theme_options.php');
 require(TEMPLATEPATH . '/functions/post_type_parents_faq.php');
 require(TEMPLATEPATH . '/functions/gallery_images_layout.php');
+require(TEMPLATEPATH . '/functions/social_hub_options_page.php');
+require(TEMPLATEPATH . '/functions/social_hub.php');
 
 /**
  * Adding the ability to add widgets.

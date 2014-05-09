@@ -119,9 +119,16 @@
 		<li><a href="#" class="twitter"></a></li>
 		<li><a href="#" class="instagram"></a></li>
 		<li><a href="#" class="youtube"></a></li>
-	</ul><!--
+	</ul>
+	<?php
+	$tweets = $GLOBALS['social_hub']->getTweets();
+	$instas = $GLOBALS['social_hub']->getInstas();
+	$items  = $GLOBALS['social_hub']->merge(array($tweets, $instas));
+	$items  = $GLOBALS['social_hub']->sortByTime($items);	
+	?>
 	<div class="social-posts">
-		<div class="social-post">
+		<?php echo $GLOBALS['social_hub']->wrapItems($items); ?>
+		<!-- <div class="social-post">
 			<span class="post-type-ico"></span>
 			<div class="image">
 				<img src="<?php echo TDU; ?>/images/img-16.jpg" alt="">
@@ -217,13 +224,13 @@
 					<span><b>Amy Romanello</b> <br>@aron2013</span>
 				</a>
 			</div>
-		</div>
+		</div> -->
 	</div>
 	<div class="more-posts-holder">
 		<a href="#" class="more-social-posts">LOAD MORE</a>
 	</div>
-	<a id="to_top" class="btn-top" href="#">BACK TO TOP</a>-->
-	<div class="no-social-posts">
+	<a id="to_top" class="btn-top" href="#">BACK TO TOP</a>
+	<!-- <div class="no-social-posts">
 		<h2 class="text-coming-soon">Coming Soon</h2>
 		<div class="center">
 			<div class="text">
@@ -238,7 +245,7 @@
 				<input type="submit" value="Notify Me">
 			</form>
 		</div>
-	</div>
+	</div> -->
 </section>
 <script type="text/javascript">
 	jQuery(function(){
