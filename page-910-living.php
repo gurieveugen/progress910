@@ -114,17 +114,16 @@
 		</div>
 	</div>
 	<ul class="sp-navigation">
-		<li class="active"><a href="#" class="home"></a></li>
-		<li><a href="#" class="facebook"></a></li>
-		<li><a href="#" class="twitter"></a></li>
-		<li><a href="#" class="instagram"></a></li>
-		<li><a href="#" class="youtube"></a></li>
+		<li class="active"><a href="#" class="home" data-filter="all"></a></li>
+		
+		<li><a href="#" class="twitter" data-filter=".filter-twitter"></a></li>
+		<li><a href="#" class="instagram" data-filter=".filer-instagram"></a></li>
+		<!-- <li><a href="#" class="facebook"></a></li> -->
+		<!-- <li><a href="#" class="youtube"></a></li> -->
 	</ul>
-	<?php
-	$tweets = $GLOBALS['social_hub']->getTweets();
-	$instas = $GLOBALS['social_hub']->getInstas();
-	$items  = $GLOBALS['social_hub']->merge(array($tweets, $instas));
-	$items  = $GLOBALS['social_hub']->sortByTime($items);	
+	<?php	
+	$items = $GLOBALS['social_hub']->getItems();
+	$items = array_slice($items, 0, $GLOBALS['social_hub']->options['count']);
 	?>
 	<div class="social-posts">
 		<?php echo $GLOBALS['social_hub']->wrapItems($items); ?>

@@ -160,6 +160,8 @@ add_action('wp_enqueue_scripts', 'scripts_method');
 
 add_action('wp_ajax_send_invite', 'send_ivite_ajax');
 add_action('wp_ajax_nopriv_send_invite', 'send_ivite_ajax');
+add_action('wp_ajax_more', 'moreAJAX');
+add_action('wp_ajax_nopriv_more', 'moreAJAX');
 
 /**
  * Load the Short code, widget
@@ -367,6 +369,22 @@ function send_ivite_ajax()
 			echo "ERROR";
 		}
 	}
+	die();
+}
+
+/**
+ * Get more items to social hub
+ */
+function moreAJAX()
+{
+	$off            = intval($_POST['count']) * intval($_POST['more_count']);
+	$items          = $GLOBALS['social_hub']->getItems();
+	$items          = array_slice($items, $off, intval($_POST['count']));
+	$json['count']  = count($items);
+	$json['html']   = trim($GLOBALS['social_hub']->wrapItems($items));
+	$json['result'] = true;
+	
+	echo json_encode($json);
 	die();
 }
 

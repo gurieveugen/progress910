@@ -18,6 +18,7 @@ class SocialHub{
 	const TWITTER_USER_URL   = 'https://twitter.com/%s';
 	const TWEET_URL          = 'https://twitter.com/%s/status/%s';
 	const INSTAGRAM_USER_URL = 'http://instagram.com/%s';
+	const CACHE_ON           = true;
 
 	//                                       __  _          
 	//     ____  _________  ____  ___  _____/ /_(_)__  _____
@@ -28,6 +29,7 @@ class SocialHub{
 	public $instagram;
 	public $twitter;
 	public $options;
+	private $items;
 
 	//                    __  __              __    
 	//    ____ ___  ___  / /_/ /_  ____  ____/ /____
@@ -49,8 +51,66 @@ class SocialHub{
 
 		wp_enqueue_script('masonry', get_bloginfo('template_url').'/js/masonry.js', array('jquery'));
 		wp_enqueue_script('social_hub', get_bloginfo('template_url').'/js/social_hub.js', array('jquery'));
+		wp_localize_script('social_hub', 'social_hub', array(
+			'container'  => '.social-posts',
+			'ajax_url'   => get_bloginfo('wpurl').'/wp-admin/admin-ajax.php',
+			'more_count' => 1,
+			'count'      => $this->options['count']));
 	}
 
+	/**
+	 * Get All social items
+	 * @return array
+	 */
+	public function getItems()
+	{
+		$cache = $this->getCache(__CLASS__);
+		if($cache)
+		{			
+			return $cache;
+		}
+
+		$tweets = $this->getTweets();
+		$instas = $this->getInstas();
+		$items  = $this->merge(array($tweets, $instas));
+		$items  = $this->sortByTime($items);	
+
+		$this->setCache(__CLASS__, $items, 3600);
+		return $items;
+	}
+
+	/**
+	 * Set Cache
+	 * @param string  $key    
+	 * @param string  $val    
+	 * @param integer $time   
+	 * @param string  $prefix 
+	 */
+	public function setCache($key, $val, $time = 3600, $prefix = 'cheched-')
+	{		
+		set_transient($prefix.$key, $val, $time);
+	}
+
+	/**
+	 * Get Cache
+	 * @param  string $key    
+	 * @param  string $prefix 
+	 * @return mixed
+	 */
+	public function getCache($key, $prefix = 'cheched-')
+	{		
+		if(self::CACHE_ON)
+		{
+			$cached   = get_transient($prefix.$key);
+			if (false !== $cached) return $cached;	
+		}
+		return false;
+	}
+
+	/**
+	 * Get instagram items
+	 * @return array
+	 */
 	public function getInstas()
 	{
 		$hash = str_replace('#', '', $this->options['instagram_hash']);
@@ -77,6 +137,10 @@ class SocialHub{
 		return $out;
 	}
 
+	/**
+	 * Get twitter items
+	 * @return array
+	 */
 	public function getTweets()
 	{
 		$tweets = $this->twitter->get("https://api.twitter.com/1.1/search/tweets.json?q=".urlencode($this->options['twitter_hash'])."&count=30");
@@ -102,8 +166,13 @@ class SocialHub{
 		return $out;
 	}
 
+	/**
+	 * Wrap all items to HTML code
+	 * @param  array $items --- items to wrap
+	 */
 	public function wrapItems($items)
 	{
+		$out = '';
 		if($items)
 		{
 			foreach ($items as $item) 
@@ -111,17 +180,22 @@ class SocialHub{
 				switch ($item['type']) 
 				{
 					case 'twitter':
-						$this->wrapTweet($item);
+						$out .= $this->wrapTweet($item);
 						break;
 					case 'instagram':
-						$this->wrapInstagram($item);
+						$out .= $this->wrapInstagram($item);
 						break;
 				}
 			}
 		}
+		return $out;
 	}
 
-	public function wrapTweet($item)
+	/**
+	 * Wrap tweet item
+	 * @param  array $item --- one twitter item
+	 */
+	private function wrapTweet($item)
 	{
 		$minutes_ago = intval((microtime(true) - $item['time']) / 60);
 		$user_url    = sprintf(self::TWITTER_USER_URL, $item['user']['name']);
@@ -130,6 +204,7 @@ class SocialHub{
 		$retweet     = sprintf(self::RETWEET_URL, $item['id']);
 		$favorite    = sprintf(self::FAVORITE_URL, $item['id']);
 		$share       = sprintf(self::TWITTER_SHARE_URL, $item['user']['name'], urlencode($item['text']), $url);
+		ob_start();
 		?>
 		<div class="social-post filter-twitter">
 			<span class="post-type-ico twitter"></span>								
@@ -153,14 +228,22 @@ class SocialHub{
 			</div>
 		</div>
 		<?php
+		$var = ob_get_contents();
+		ob_end_clean();
+    	return $var;
 	}
 
+	/**
+	 * Wrap instagram item
+	 * @param  array $item --- one instagram item
+	 */
 	public function wrapInstagram($item)
 	{	
 		$url         = $item['link'];
 		$user_url    = sprintf(self::INSTAGRAM_USER_URL, $item['user']['name']);
 		$minutes_ago = intval((microtime(true) - $item['time']) / 60);
 		$share       = sprintf(self::TWITTER_SHARE_URL, '', urlencode($item['text']), $url);
+		ob_start();
 		?>
 		<div class="social-post filer-instagram">
 			<span class="post-type-ico instagram"></span>
@@ -182,8 +265,16 @@ class SocialHub{
 			</div>
 		</div>
 		<?php
+		$var = ob_get_contents();
+		ob_end_clean();
+    	return $var;
 	}
 
+	/**
+	 * Custom array merge
+	 * @param  array $args --- arrays
+	 * @return array       --- one big array
+	 */
 	public function merge($args)
 	{
 		$res = array();
@@ -204,6 +295,11 @@ class SocialHub{
 		return $res;
 	}
 
+	/**
+	 * Custom sort Social items
+	 * @param  array $arr --- social items
+	 * @return array      --- sorted result
+	 */
 	public function sortByTime($arr)
 	{
 		$res   = array();
@@ -216,6 +312,11 @@ class SocialHub{
 		return $res;
 	}
 
+	/**
+	 * Get time from array element
+	 * @param  array $el --- array element
+	 * @return integer   --- time unix format
+	 */
 	public function getTime($el)
 	{
 		return $el['time'];
