@@ -126,12 +126,125 @@
 	$items = array_slice($items, 0, $GLOBALS['social_hub']->options['count']);
 	?>
 	<div class="social-posts">
-		<?php echo $GLOBALS['social_hub']->wrapItems($items); ?>		
+		<?php echo $GLOBALS['social_hub']->wrapItems($items); ?>
+		<!-- <div class="social-post">
+			<span class="post-type-ico"></span>
+			<div class="image">
+				<img src="<?php echo TDU; ?>/images/img-16.jpg" alt="">
+			</div>
+			<div class="text">
+				<p><a href="#">So Happy to be back at what Feels Like My Actual Home #progress910</a></p>
+				<div class="sub-row">
+					3 minutes ago
+					<div class="tweet-control">
+						<a href="#" class="reply">reply</a>
+						<a href="#" class="retweet">retweet</a>
+						<a href="#" class="favorite">favorite</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<a href="#" class="user">
+					<img src="<?php echo TDU; ?>/images/img-17.jpg" alt="">
+					<span><b>Amy Romanello</b> <br>@aron2013</span>
+				</a>
+				<a href="#" class="share">share</a>
+			</div>
+		</div>
+		<div class="social-post">
+			<span class="post-type-ico twitter"></span>
+			<div class="image">
+				<img src="<?php echo TDU; ?>/images/img-16.jpg" alt="">
+			</div>
+			<div class="text">
+				<p><a href="#">So Happy to be back at what Feels Like My Actual Home #progress910</a></p>
+				<div class="sub-row">
+					3 minutes ago
+					<div class="tweet-control">
+						<a href="#" class="reply">reply</a>
+						<a href="#" class="retweet">retweet</a>
+						<a href="#" class="favorite">favorite</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<a href="#" class="share">share</a>
+				<a href="#" class="user">
+					<img src="<?php echo TDU; ?>/images/img-17.jpg" alt="">
+					<span><b>Amy Romanello</b> <br>@aron2013</span>
+				</a>
+			</div>
+		</div>
+		<div class="social-post">
+			<span class="post-type-ico instagram"></span>
+			<div class="image">
+				<img src="<?php echo TDU; ?>/images/img-16.jpg" alt="">
+			</div>
+			<div class="text">
+				<p><a href="#">So Happy to be back at what Feels Like My Actual Home #progress910</a></p>
+				<div class="sub-row">
+					3 minutes ago
+					<div class="tweet-control">
+						<a href="#" class="reply">reply</a>
+						<a href="#" class="retweet">retweet</a>
+						<a href="#" class="favorite">favorite</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<a href="#" class="share">share</a>
+				<a href="#" class="user">
+					<img src="<?php echo TDU; ?>/images/img-17.jpg" alt="">
+					<span><b>Amy Romanello</b> <br>@aron2013</span>
+				</a>
+			</div>
+		</div>
+		<div class="social-post">
+			<span class="post-type-ico youtube"></span>
+			<div class="image">
+				<img src="<?php echo TDU; ?>/images/img-16.jpg" alt="">
+				<div class="ico-play"></div>
+			</div>
+			<div class="text">
+				<p><a href="#">So Happy to be back at what Feels Like My Actual Home #progress910</a></p>
+				<div class="sub-row">
+					3 minutes ago
+					<div class="tweet-control">
+						<a href="#" class="reply">reply</a>
+						<a href="#" class="retweet">retweet</a>
+						<a href="#" class="favorite">favorite</a>
+					</div>
+				</div>
+			</div>
+			<div class="footer">
+				<a href="#" class="share">share</a>
+				<a href="#" class="user">
+					<img src="<?php echo TDU; ?>/images/img-17.jpg" alt="">
+					<span><b>Amy Romanello</b> <br>@aron2013</span>
+				</a>
+			</div>
+		</div> -->
 	</div>
 	<div class="more-posts-holder">
 		<a href="#" class="more-social-posts">LOAD MORE</a>
 	</div>
-	<a id="to_top" class="btn-top" href="#">BACK TO TOP</a>	
+	<a id="to_top" class="btn-top" href="#">BACK TO TOP</a>
+	<!-- <div class="no-social-posts">
+		<h2 class="text-coming-soon">Coming Soon</h2>
+		<div class="center">
+			<div class="text">
+				<h4>Want an invite?</h4>
+				<p>We are currently developing this area of our website, please register to receive notice of our launch and other great stuff that happens here. *We respect your privacy.</p>
+			</div>
+			<form action="#" class="notify-form" onsubmit="send_invite(); return false;">
+				<div class="row">
+					<label>Enter your email</label>
+					<input type="email" value="" name="email_invite" id="email_invite" required>
+				</div>
+				<input type="submit" value="Notify Me">
+			</form>
+		</div>
+	</div> -->
 </section>
 <script type="text/javascript">
 	jQuery(function(){

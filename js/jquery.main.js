@@ -92,7 +92,10 @@ jQuery(function() {
         closeClick: false,
         openEffect: 'none',
         closeEffect: 'none',
-        tpl: { wrap     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin CHANGETHIS"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>' }
+        tpl: {
+        	wrap     : '<div class="fancybox-wrap popup-s" tabIndex="-1"><div class="fancybox-skin CHANGETHIS"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>',
+			closeBtn : '<a title="Close" class="fancybox-item fancybox-close" href="javascript:;">Close</a>'
+		}
     });
 
 });
