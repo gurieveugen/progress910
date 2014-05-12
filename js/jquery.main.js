@@ -91,7 +91,8 @@ jQuery(function() {
         autoSize: true,
         closeClick: false,
         openEffect: 'none',
-        closeEffect: 'none'
+        closeEffect: 'none',
+        tpl: { wrap     : '<div class="fancybox-wrap" tabIndex="-1"><div class="fancybox-skin CHANGETHIS"><div class="fancybox-outer"><div class="fancybox-inner"></div></div></div></div>' }
     });
 
 });
