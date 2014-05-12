@@ -197,7 +197,7 @@ class SocialHub{
 	 */
 	private function wrapTweet($item)
 	{
-		$minutes_ago = intval((microtime(true) - $item['time']) / 60);
+		$minutes_ago = $this->socialTimeSpan($item['time']);
 		$user_url    = sprintf(self::TWITTER_USER_URL, $item['user']['name']);
 		$url         = $item['link'];
 		$reply       = sprintf(self::REPLY_URL, $item['id']);
@@ -209,9 +209,9 @@ class SocialHub{
 		<div class="social-post filter-twitter">
 			<span class="post-type-ico twitter"></span>								
 			<div class="text">
-				<p><a href="<?php echo $url; ?>"><?php echo $item['text']; ?></a></p>
+				<p><a href="#<?php echo $item['id']; ?>" class="various"><?php echo $item['text']; ?></a></p>
 				<div class="sub-row">
-					<?php echo $minutes_ago; ?> minutes ago
+					<?php echo $minutes_ago; ?> 
 					<div class="tweet-control">
 						<a href="<?php echo $reply; ?>" class="reply">reply</a>
 						<a href="<?php echo $retweet; ?>" class="retweet">retweet</a>
@@ -227,6 +227,9 @@ class SocialHub{
 				</a>
 			</div>
 		</div>
+		<div id="<?php echo $item['id']; ?>" style="display:none; width: 400px;">
+			<p><?php echo $item['text']; ?></p>
+		</div>
 		<?php
 		$var = ob_get_contents();
 		ob_end_clean();
@@ -241,7 +244,7 @@ class SocialHub{
 	{	
 		$url         = $item['link'];
 		$user_url    = sprintf(self::INSTAGRAM_USER_URL, $item['user']['name']);
-		$minutes_ago = intval((microtime(true) - $item['time']) / 60);
+		$minutes_ago = $this->socialTimeSpan($item['time']);
 		$share       = sprintf(self::TWITTER_SHARE_URL, '', urlencode($item['text']), $url);
 		ob_start();
 		?>
@@ -251,9 +254,9 @@ class SocialHub{
 				<img src="<?php echo $item['img']; ?>" alt="">
 			</div>
 			<div class="text">
-				<p><a href="<?php echo $url; ?>"><?php echo $item['text']; ?></a></p>
+				<p><a href="#<?php echo $item['id']; ?>" class="various"><?php echo $item['text']; ?></a></p>
 				<div class="sub-row">
-					<?php echo $minutes_ago; ?> minutes ago					
+					<?php echo $minutes_ago; ?> 					
 				</div>
 			</div>
 			<div class="footer">
@@ -263,6 +266,10 @@ class SocialHub{
 					<span><b><?php echo $item['user']['display_name']; ?></b> <br>@<?php echo $item['user']['name']; ?></span>
 				</a>
 			</div>
+		</div>
+		<div id="<?php echo $item['id']; ?>" style="display:none;">
+			<img src="<?php echo $item['img']; ?>" alt="">
+			<p><?php echo $item['text']; ?></p>
 		</div>
 		<?php
 		$var = ob_get_contents();
@@ -320,6 +327,47 @@ class SocialHub{
 	public function getTime($el)
 	{
 		return $el['time'];
+	}
+
+	/**
+	 * Generate social time.
+	 * Exaples: 9 hours ago, 1 day ago etc.
+	 * @param  integer $unix_date --- datetime value to format in 
+	 * @param  boolean $short_val --- if TRUE return short label. Example: sec instead second
+	 * @return string
+	 */
+	public function socialTimeSpan($unix_date, $short_val = false)
+	{    
+		if ($short_val) $periods = array("sec", "min", "h", "d", "w", "m", "y", "dec");
+		else $periods = array("second", "minute", "hour", "day", "week", "month", "year", "decade");
+		    
+		$lengths = array("60","60","24","7","4.35","12","10"); 
+
+			$now = time();
+
+		if(empty($unix_date)) return "Bad date";
+			 
+		if($now > $unix_date)
+		{
+			$difference = $now - $unix_date;
+			$tense = "ago";	 
+		}
+		else
+		{
+			$difference = $unix_date - $now;
+			$tense = "from now";
+		}
+
+		for($j = 0; $difference >= $lengths[$j] && $j < count($lengths)-1; $j++) $difference /= $lengths[$j];
+			 
+		$difference = round($difference);
+
+		if($difference != 1 && !$short_val) $periods[$j].= "s";
+		$per = __($periods[$j]);
+
+		if ($short_val) return $difference.$per;    
+		    
+		return $difference.' '.$per.' '.__($tense);    
 	}
 	
 }

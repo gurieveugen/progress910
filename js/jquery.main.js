@@ -1,7 +1,6 @@
 var DEFAULT_ISOTOPE_FILTER    = ".isotopeItem";
 var DEFAULT_PAGINATION_ITEM   = ".pagination li";
-var DEFAULT_ISOTOPE_CONTAINER = ".isotopeContainer";
-                                                                             
+var DEFAULT_ISOTOPE_CONTAINER = ".isotopeContainer";                                                              
 jQuery(function() {
 	// ========================================================
 	// Add class sizer for gallery
@@ -82,6 +81,18 @@ jQuery(function() {
 			}
 		}
 	});
+
+	jQuery(".various").fancybox({
+        maxWidth: 880,
+        maxHeight: 600,
+        fitToView: false,
+        width: '70%',
+        height: '70%',
+        autoSize: true,
+        closeClick: false,
+        openEffect: 'none',
+        closeEffect: 'none'
+    });
 
 });
 
