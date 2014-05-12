@@ -121,15 +121,18 @@ class SocialHub{
 		{
 			foreach ($data->data as &$item) 
 			{				
-				$res['id']					 = $item->id;
-				$res['text']				 = $item->caption->text;
-				$res['img']				     = $item->images->low_resolution->url;
-				$res['time']			     = intval($item->created_time);
-				$res['link']			     = $item->link;
-				$res['type']				 = 'instagram';
+				$res['id']                   = $item->id;
+				$res['text']                 = $item->caption->text;
+				$res['img']                  = $item->images->standard_resolution->url;
+				$res['time']                 = intval($item->created_time);
+				$res['link']                 = $item->link;
+				$res['type']                 = 'instagram';
 				$res['user']['name']         = $item->user->username;
 				$res['user']['display_name'] = $item->user->full_name;
 				$res['user']['img']          = $item->user->profile_picture;
+				$res['comments_count']       = $item->comments->count;
+				$res['likes_count']          = $item->likes->count;
+
 				array_push($out, $res);
 			}
 		}
@@ -148,18 +151,20 @@ class SocialHub{
 		$out    = array();
 
 		if($tweets->statuses)
-		{
+		{		
 			foreach ($tweets->statuses as &$item) 
 			{
 				$res['id']					 = $item->id_str;
 				$res['text']				 = $item->text;
-				$res['img']				     = $item->images->low_resolution->url;
+				$res['img']				     = $item->images->standard_resolution->url;
 				$res['time']			     = strtotime($item->created_at);
 				$res['link']			     = sprintf(self::TWEET_URL, $item->user->screen_name, $item->id_str);
 				$res['type']                 = 'twitter';
 				$res['user']['name']         = $item->user->screen_name;
 				$res['user']['display_name'] = $item->user->name;
 				$res['user']['img']          = $item->user->profile_image_url;
+				$res['comments_count']       = $item->retweet_count;
+				$res['likes_count']          = $item->favorite_count;
 				array_push($out, $res);
 			}
 		}		
@@ -204,6 +209,12 @@ class SocialHub{
 		$retweet     = sprintf(self::RETWEET_URL, $item['id']);
 		$favorite    = sprintf(self::FAVORITE_URL, $item['id']);
 		$share       = sprintf(self::TWITTER_SHARE_URL, $item['user']['name'], urlencode($item['text']), $url);
+		$pattern     = '/(\s\#([_a-z0-9\-]+))/i';
+		$replace     = '<a href="https://twitter.com/search?q=%23$2&src=hash" target="_blank">$1</a>';
+		$text        = preg_replace($pattern, $replace, $item['text']);
+		$pattern     = '/(@([_a-z0-9\-]+))/i';
+		$replace     = '<a href="http://twitter.com/$2" title="Follow $2" target="_blank">$1</a>';
+		$text        = preg_replace($pattern, $replace, $text);
 		ob_start();
 		?>
 		<div class="social-post filter-twitter">
@@ -227,8 +238,17 @@ class SocialHub{
 				</a>
 			</div>
 		</div>
-		<div id="<?php echo $item['id']; ?>" style="display:none; width: 400px;">
-			<p><?php echo $item['text']; ?></p>
+		<div id="<?php echo $item['id']; ?>" style="display:none; width: 500px;">			
+			<div class="header cf">
+				<a target="_blank" class="link" href="<?php echo $item['link']; ?>"><?php echo date ('F j, Y', $item['time']); ?> via Tweeter</a>
+				<div class="right">
+					<span class="i-comments"><?php echo $item['comments_count']; ?></span>
+					<span class="i-likes"><?php echo $item['likes_count']; ?></span>
+				</div>
+			</div>
+			<div class="content">
+				<p><?php echo $text ?></p>
+			</div>
 		</div>
 		<?php
 		$var = ob_get_contents();
@@ -246,6 +266,9 @@ class SocialHub{
 		$user_url    = sprintf(self::INSTAGRAM_USER_URL, $item['user']['name']);
 		$minutes_ago = $this->socialTimeSpan($item['time']);
 		$share       = sprintf(self::TWITTER_SHARE_URL, '', urlencode($item['text']), $url);
+		$pattern     = '/(@([_a-z0-9\-]+))/i';
+		$replace     = '<a href="http://instagram.com/$2" rel="nofollow" target="_blank">$1</a>';
+		$text        = preg_replace($pattern, $replace, $item['text']);
 		ob_start();
 		?>
 		<div class="social-post filer-instagram">
@@ -267,9 +290,18 @@ class SocialHub{
 				</a>
 			</div>
 		</div>
-		<div id="<?php echo $item['id']; ?>" style="display:none;">
+		<div id="<?php echo $item['id']; ?>" style="display:none; width: 500px;">
 			<img src="<?php echo $item['img']; ?>" alt="">
-			<p><?php echo $item['text']; ?></p>
+			<div class="header cf">
+				<a target="_blank" class="link" href="<?php echo $item['link']; ?>"><?php echo date ('F j, Y', $item['time']); ?> via Instagram</a>
+				<div class="right">
+					<span class="i-comments"><?php echo $item['comments_count']; ?></span>
+					<span class="i-likes"><?php echo $item['likes_count']; ?></span>
+				</div>
+			</div>
+			<div class="content">
+				<p><?php echo $text ?></p>
+			</div>
 		</div>
 		<?php
 		$var = ob_get_contents();

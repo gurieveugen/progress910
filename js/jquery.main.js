@@ -82,14 +82,11 @@ jQuery(function() {
 		}
 	});
 
-	jQuery(".various").fancybox({
-        maxWidth: 880,
-        maxHeight: 600,
+	jQuery(".various").fancybox({       
         fitToView: false,
-        width: '70%',
-        height: '70%',
         autoSize: true,
         closeClick: false,
+        scrolling: 'no',
         openEffect: 'none',
         closeEffect: 'none',
         tpl: {
