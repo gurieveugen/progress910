@@ -6,7 +6,7 @@
 ?>
 <?php 
 
-$_SESSION["gallery_items"] = 15;
+$_SESSION["gallery_items"] = 16;
 $_SESSION["gallery_class"] = "photos";
 get_header(); 
 ?>

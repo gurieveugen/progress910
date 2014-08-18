@@ -63,11 +63,12 @@ jQuery(function() {
 
 		show_isotope_items(gallery_items, 1, '.pagination li:first', '.*');
 
-		jQuery('.isotopeMenu li a').click(function(){			
+		jQuery('.isotopeMenu li a').click(function(e){			
 			filter = "." + jQuery(this).attr('href');				
 			jQuery('.pagination-holder').remove();
 			jQuery('.rx_isotope_ui').append(get_pagination(filter, gallery_items));
 			show_isotope_items(gallery_items, 1, '.pagination li:first', filter);
+			e.preventDefault();
 		});
 		jQuery('.isotopeMenu li:first').find('a').click();
 	}
