@@ -61,7 +61,6 @@ get_header();
 		<h2>progress910 features</h2>
 		<ul class="list">
 			<li>24-hour Emergency Maintenance</li>
-			<li>Emergency Call Stations</li>
 			<li>Security Cameras</li>
 			<li>Secure Building Entrance</li>
 			<li>Cable and WiFi Included</li>

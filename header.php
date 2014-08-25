@@ -41,7 +41,7 @@ function addmap()
 	var gmap;
 	var show_910          = true;
 	var show_uncw         = false;
-	var show_lease_office = true;
+	var show_lease_office = false;
 	function initialize() 
 	{
 		var mapOptions = 
@@ -194,6 +194,8 @@ $twitter                  = (empty($p_twitter)) ? "" : '<li><a href="'.$p_twitte
 <body <?php body_class(); ?>>
 	<div id="wrapper">
 		<a href="https://progress910.prospectportal.com/Apartments/module/application_authentication/" id="btn-apply-now">APPLY NOW</a>
+		<a href="http://modernmsg.com/progress-910" id="btn-reviews">Reviews</a>
+		<a href="http://modernmsg.com/rewards/progress-910" id="btn-rewards">Rewards</a>
 		<!--<a href="#" id="btn-pay-rent">PAY RENT</a>-->
 		<div class="center-wrap">
 			<header id="header">

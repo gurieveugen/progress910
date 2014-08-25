@@ -43,10 +43,10 @@ $youtube                  = (empty($p_youtube)) ? "" : '<li><a href="'.$p_youtub
 					</div>
 				</aside>
 				<aside class="contact-area">
-					<div class="column">
+					<?php /* ?><div class="column">
 						<h3>Leasing Office</h3>
 						<address><?php echo $p_leasing_office_address; ?></address>						
-					</div>
+					</div><?php */ ?>
 					<div class="column">
 						<h3>Progress910</h3>
 						<address class="ico"><?php echo $p_progress_910_address; ?></address>						

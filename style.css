@@ -419,6 +419,28 @@ blockquote cite, blockquote small {
 	overflow:hidden;
 	z-index: 1000;
 }
+#btn-reviews {
+	background:url(images/btn-reviews.png) no-repeat;
+	width:45px;
+	height:138px;
+	position:fixed;
+	left:0;
+	top:235px;
+	text-indent:-9999px;
+	overflow:hidden;
+	z-index: 1000;
+}
+#btn-rewards {
+	background:url(images/btn-rewards.png) no-repeat;
+	width:45px;
+	height:141px;
+	position:fixed;
+	left:0;
+	top:381px;
+	text-indent:-9999px;
+	overflow:hidden;
+	z-index: 1000;
+}
 /*#btn-pay-rent {
 	background:url(images/btn-pay-rent.png) no-repeat;
 	width:46px;
@@ -2658,6 +2680,7 @@ table.gadget .powered{
 .contact-section .email{
 	padding: 0 0 0 55px;
 	background: url(images/ico-email.png) no-repeat 0 10px;
+    float: left;
 }
 .contact-section .phone{
 	padding: 0 0 0 55px;

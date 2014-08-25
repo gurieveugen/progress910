@@ -60,17 +60,19 @@ $p_leasing_office_address = trim(get_option('p_leasing_office_address'));
 
 		<div class="column">
 
-			<h5>Leasing Office</h5>
+			<?php /* <h5>Leasing Office</h5>
 
 			<address><?php echo $p_leasing_office_address."<br>".$p_phone; ?></address>
+            */ ?>
 
 		</div>
 
 		<div class="gadget-holder">			
 
-			<div class="gadget">				
+			<div class="gadget">
 
-				<script src="//www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/driving_directions.xml&amp;up_from=&amp;up_to=5214%20Market%20Street%20Suite%20101%20Wilmington,%20NC%2028405&amp;up_country=0&amp;synd=open&amp;w=410&amp;h=102&amp;title=Directions+by+Google+Maps&amp;lang=all&amp;country=ALL&amp;output=js"></script>				
+				<?php /* ?><script src="//www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/driving_directions.xml&amp;up_from=&amp;up_to=5214%20Market%20Street%20Suite%20101%20Wilmington,%20NC%2028405&amp;up_country=0&amp;synd=open&amp;w=410&amp;h=102&amp;title=Directions+by+Google+Maps&amp;lang=all&amp;country=ALL&amp;output=js"></script><?php */?>				
+                <script src="//www.gmodules.com/ig/ifr?url=http://www.google.com/ig/modules/driving_directions.xml&amp;up_from=&amp;up_to=316%20Marlboro%20Street,%20Wilmington,%20NC%2028403&amp;up_country=0&amp;synd=open&amp;w=410&amp;h=102&amp;title=Directions+by+Google+Maps&amp;lang=all&amp;country=ALL&amp;output=js"></script>
 
 			</div>			
 

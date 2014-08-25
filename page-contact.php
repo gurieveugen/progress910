@@ -33,24 +33,27 @@ $p_leasing_office_address = trim(get_option('p_leasing_office_address'));
 				<h5>progress 910</h5>
 				<address><?php echo $p_progress_910_address; ?></address>
 			</div>
-			<div class="column">
+			<?php /* ?><div class="column">
 				<h5>Leasing Office</h5>
 				<address><?php echo $p_leasing_office_address; ?></address>
 			</div>
-		</div>
-		<div class="column phone">
+            <?php */ ?>
+		</div>		
+	</div>
+    <div class="contact-section">
+        <div class="column phone">
 			<dl>
 				<dt>phone:</dt><dd><?php echo $p_phone; ?></dd>
 				<dt>fax:</dt><dd><?php echo $p_fax; ?></dd>
 			</dl>
 		</div>
-		<div class="right email">
+		<div class="email">
 			<dl>
 				<dt>General:</dt><dd><a href="mailto:<?php echo $p_email; ?>"><?php echo $p_email; ?></a></dd>
 				<dt>leasing:</dt><dd><a href="mailto:<?php echo $p_email_leasing; ?>"><?php echo $p_email_leasing; ?></a></dd>
 			</dl>
 		</div>
-	</div>
+    </div>
 	<div class="contact-section last">
 		<div class="column hours">
 			<h5>Office hours:</h5>
