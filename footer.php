@@ -124,8 +124,14 @@ $youtube                  = (empty($p_youtube)) ? "" : '<li><a href="'.$p_youtub
 	})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
 	ga('create', 'UA-40821346-2', 'progress910.com');
+	ga('create', 'UA-52619500-15', 'auto', {'name': 'newTracker'});
+
 	ga('require', 'displayfeatures');
 	ga('send', 'pageview');
+	ga('newTracker.send', 'pageview');
+
+
+	console.log(ga.getAll());
 
 	</script>
 </body>
