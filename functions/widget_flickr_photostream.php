@@ -33,11 +33,13 @@ class widget_flickr_photostream extends WP_Widget
 		echo $before_widget;		
 		echo $before_title.$title.$after_title;
 		echo '<ul class="social-gallery">';
-		
-		foreach ($flickr_images as $key => $value) 
-		{	
-			?><li><a href="<?php echo $value->url_o; ?>"><img src="<?php echo $value->url_sq; ?>" alt=""><i></i></a></li><?php			
-		}			
+		if(is_array($flickr_images))
+		{
+			foreach ($flickr_images as $key => $value) 
+			{	
+				?><li><a href="<?php echo $value->url_o; ?>"><img src="<?php echo $value->url_sq; ?>" alt=""><i></i></a></li><?php			
+			}				
+		}
 		echo '</ul>';
 		echo '<a href="'.$url.'" class="social-link">view our flickr <br>Photostream</a>';
 		echo $after_widget;
@@ -117,7 +119,7 @@ class widget_flickr_photostream extends WP_Widget
     	{
     		$encoded_params[] = urlencode($k).'='.urlencode($v);
     	}
-    	$url     = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);    	
+    	$url     = "https://api.flickr.com/services/rest/?".implode('&', $encoded_params);    	
     	$rsp     = file_get_contents($url);
     	$rsp_obj = unserialize($rsp);
     	// ========================================================
@@ -150,7 +152,8 @@ class widget_flickr_photostream extends WP_Widget
     	{
     		$encoded_params[] = urlencode($k).'='.urlencode($v);
     	}
-		$url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);    
+		$url = "https://api.flickr.com/services/rest/?".implode('&', $encoded_params);    
+
 		$rsp = file_get_contents($url);
 		$arr = json_decode($rsp);
 
@@ -179,7 +182,7 @@ class widget_flickr_photostream extends WP_Widget
     	{
     		$encoded_params[] = urlencode($k).'='.urlencode($v);
     	}
-		$url = "http://api.flickr.com/services/rest/?".implode('&', $encoded_params);    
+		$url = "https://api.flickr.com/services/rest/?".implode('&', $encoded_params);    
 		$rsp = file_get_contents($url);
 		$arr = json_decode($rsp);
 		
