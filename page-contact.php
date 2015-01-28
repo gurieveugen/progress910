@@ -57,7 +57,7 @@ $p_leasing_office_address = trim(get_option('p_leasing_office_address'));
 	<div class="contact-section last">
 		<div class="column hours">
 			<h5>Office hours:</h5>
-			<p>Mon-Fri: 10 AM - 8 PM</p>
+			<p>Mon-Fri: 9 AM - 7 PM</p>
 			<p>Saturday: 11 AM - 5 PM</p>
 			<p>Sunday: 1 PM - 5 PM</p>
 

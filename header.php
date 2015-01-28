@@ -193,7 +193,7 @@ $twitter                  = (empty($p_twitter)) ? "" : '<li><a href="'.$p_twitte
 </head>
 <body <?php body_class(); ?>>
 	<div id="wrapper">
-		<a href="https://progress910.prospectportal.com/Apartments/module/application_authentication/" id="btn-apply-now">APPLY NOW</a>
+		<a href="http://progress910.com/application/" id="btn-apply-now">APPLY NOW</a>
 		<a href="http://modernmsg.com/progress-910" id="btn-reviews">Reviews</a>
 		<a href="http://modernmsg.com/rewards/progress-910" id="btn-rewards">Rewards</a>
 		<!--<a href="#" id="btn-pay-rent">PAY RENT</a>-->
